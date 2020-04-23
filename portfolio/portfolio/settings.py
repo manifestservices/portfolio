@@ -149,5 +149,5 @@ MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
 MEDIA_URL = '/media/'
 
-# from portfolio.aws.conf import *
+from portfolio.aws.conf import *
 
