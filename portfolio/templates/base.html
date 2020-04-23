@@ -1,0 +1,317 @@
+{% load static from staticfiles %}
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+  	{% block meta %}
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="viewport" content="width=device-width, height=device-height, initial-scale=1.0, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
+    <title>{% block title %}Buy Second Hand Books, Old Books, Used Books Online in India| UsedBooksFactory{% endblock title %}</title>
+    {% block no_canonical %}<link rel="canonical" href="https://www.usedbooksfactory.com{% block canonical_link %}{% endblock canonical_link %}"/>{% endblock no_canonical %}
+    <meta name="description" content="{% block meta_description %}Buy cheap second hand books, old books, used books online in India with free delivery to doorstep from usedbooksfactory bookstore instead of bookshops near you{% endblock meta_description %}"/>
+    <meta property="og:title" content="{% block meta_title %}Buy Second Hand Books,Old Books,Used Books Online in India |UsedBooksFactory{% endblock meta_title %}"/>
+    <meta property="og:description" content="{% block meta_description_prop %}Buy cheap second hand books, old books, used books online in India with free delivery to doorstep from usedbooksfactory bookstore instead of bookshops near you{% endblock meta_description_prop %}"/>
+    {% block no_og_url %}<meta property="og:url" content="https://www.usedbooksfactory.com{% block meta_url %}{% endblock meta_url %}"/>{% endblock no_og_url %}
+    <meta property="og:site_name" content="UsedBooksFactory"/>
+    <meta property="og:type" content="website">
+    {% block no_index%}
+    {% endblock no_index%}
+	{% endblock meta %}
+	<link rel="shortcut icon" href="{% static 'img/favicon.ico'%}">
+    {% block style_paths%}
+    <link href="{% static 'css/font-awesome.css' %}" rel="stylesheet">
+    <link href="{% static 'css/bootstrap.css' %}" rel="stylesheet">   
+    <!-- SmartMenus jQuery Bootstrap Addon CSS -->
+    <link href="{% static 'css/jquery.smartmenus.bootstrap.css' %}" rel="stylesheet">
+    <link rel="stylesheet" type="text/css' %}" href="{% static 'css/jquery.simpleLens.css' %}">    
+    <link rel="stylesheet" type="text/css' %}" href="{% static 'css/slick.css' %}">
+    <link rel="stylesheet" type="text/css' %}" href="{% static 'css/nouislider.css' %}">
+    <link id="switcher" href="{% static 'css/theme-color/default-theme.css' %}" rel="stylesheet">
+    <link href="{% static 'css/sequence-theme.modern-slide-in.css' %}" rel="stylesheet" media="all">
+	<link href="https://fonts.googleapis.com/css?family=Open+Sans:400,600">
+    <link href="{% static 'css/style.css' %}" rel="stylesheet">    
+    <link href="{% static 'css/popup.css' %}" rel="stylesheet">
+    <link href='https://fonts.googleapis.com/css?family=Open+Sans' rel='stylesheet' type='text/css' />
+    <link href='https://fonts.googleapis.com/css?family=Lato' rel='stylesheet' type='text/css'>
+    <link href='https://fonts.googleapis.com/css?family=Raleway' rel='stylesheet' type='text/css'>
+    <link href="https://code.jquery.com/ui/1.10.2/themes/smoothness/jquery-ui.css" rel="Stylesheet"></link>
+    {% endblock style_paths%}
+    <style>
+  	{% block master_styles %}
+  	.error_red{
+		  color: #D9534F !important;
+		}
+	.label_color{
+		color: #ff6666; 
+	}
+	.failure_row_colour{
+		background-color:pink !important;
+	}
+	.success_row_colour{
+		background-color:lightgreen !important;
+	}
+  	#aa-support{
+		background-color:#337ab7 !important;
+	}
+	#common-modal-header{
+  		border-bottom:1px solid #ccc;
+  		color:#ff6666;
+  		padding-bottom: 10px;
+  	}
+  	.aa-product-title{
+  		font-size: 14px;	
+  	}
+  	.product_image{
+		width:150px !important;
+		height:200px !important;
+	}
+	.li_box{
+		width:250px !important;
+		height:450px !important;
+	}
+  	.button_style{
+  		cursor:pointer;
+  		background:rgb(189, 240, 204);
+  	}
+  	.ul_number{
+  	list-style-type:decimal;
+  	}
+  	.aa-add-card-btn{
+  	bottom:100px !important;
+  	cursor:pointer
+  	}
+  	
+  	{% endblock master_styles %}
+	{% block page_styles%}
+	{% endblock page_styles%}
+	</style>
+  </head>
+  {% block full_body%} <!-- Never to be overwritten -->
+  <body> 
+   <!-- SCROLL TOP BUTTON -->
+    <a class="scrollToTop" href="#"><i class="fa fa-chevron-up"></i></a>
+  <!-- END SCROLL TOP BUTTON -->
+	<!-- Login Modal -->  
+  <div class="modal fade" id="login-modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">                      
+        <div class="modal-body">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+          <h4 id="login-header">Login or Register</h4>
+          <form class="aa-login-form" method="POST" action="{% url 'login' %}">
+          	{% csrf_token %}
+            <label for="">Username or Email address<span>*</span></label>
+            <input type="text" placeholder="Username or email" name="username">
+            <label for="">Password<span>*</span></label>
+            <input type="password" placeholder="Password" name="password">
+            <button class="aa-browse-btn" type="submit">Login</button>
+            <p class="aa-lost-password"><a href=""><u>Forgot password?</u></a></p>
+            <div class="aa-register-now">
+              Don't have an account?<a href="">Register now!</a>
+            </div>
+          </form>
+        </div>                        
+      </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+  </div>
+  <!-- Common modal -->
+  <div class="modal fade" id="common-modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">                      
+        <div class="modal-body">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+          <h4 id="common-modal-header" align="center">Modal header</h4>
+          <p id="common-modal-content" align="center">Modal Content</p>
+        </div>                        
+      </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+  </div>    
+  {% block notification %}
+  {% for orderdetail in recent_orders %}
+  <section class="custom-social-proof" id="notification{{forloop.counter}}">
+    <div class="custom-notification">
+      <div class="custom-notification-container">
+        <div class="custom-notification-image-wrapper">
+          <a href="{{orderdetail.book_id.get_absolute_url}}" target="_blank"><img width="10" src="{{orderdetail.book_id.image.url}}"></a>
+        </div>
+        <div class="custom-notification-content-wrapper">
+          <p class="custom-notification-content notii" >
+             {{orderdetail.order_id.order_user_firstname}} from {{orderdetail.order_id.order_user_city}}<br>purchased {{orderdetail.book_id.title|truncatechars:20}}   
+            <small>
+            {{orderdetail.order_id.datetime|timesince}} ago ...
+            </small>
+          </p>
+        </div>
+      </div>
+      <div class="custom-close"></div>
+    </div>
+  </section>
+  {% endfor %}
+  {% endblock notification %}
+{% block header%}
+{% endblock header%}
+{% block body%}	<!-- Every page's body overrides this  -->
+{% endblock body%}
+{% block footer%}
+{% endblock footer%}
+{% csrf_token %}
+</body>
+{% endblock full_body%}
+{% block master_scripts%}
+<!-- jQuery library -->
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+  <!-- Include all compiled plugins (below), or include individual files as needed -->
+  <script src="{% static 'js/bootstrap.js' %}"></script>  
+  <!-- SmartMenus jQuery plugin -->
+  <script type="text/javascript" src="{% static 'js/jquery.smartmenus.js' %}"></script>
+  <!-- SmartMenus jQuery Bootstrap Addon -->
+  <script type="text/javascript" src="{% static 'js/jquery.smartmenus.bootstrap.js' %}"></script>  
+  <!-- To Slider JS -->
+  <script src="{% static 'js/sequence.js' %}"></script>
+  <script src="{% static 'js/sequence-theme.modern-slide-in.js' %}"></script>  
+  <!-- Product view slider -->
+  <script type="text/javascript" src="{% static 'js/jquery.simpleGallery.js' %}"></script>
+  <script type="text/javascript" src="{% static 'js/jquery.simpleLens.js' %}"></script>
+  <!-- slick slider -->
+  <script type="text/javascript" src="{% static 'js/slick.js' %}"></script>
+  <!-- Price picker slider -->
+  <script type="text/javascript" src="{% static 'js/nouislider.js' %}"></script>
+  <!-- Custom js -->
+  <script src="{% static 'js/custom.js' %}"></script> 
+  <script src="{% static 'js/jquery.validate.js'%}" type="text/javascript"></script>
+  <script src="{% static 'js/jquery.validate.min.js'%}" type="text/javascript"></script>
+  <script src="https://code.jquery.com/ui/1.10.2/jquery-ui.js" ></script>
+{% block sub_scripts_path%}
+{% endblock sub_scripts_path %}
+<script>
+	$(document).ready(function(){
+		
+		var t;
+		var notification_no= 1;
+		t=setInterval(show_notification,7000)
+		function show_notification()
+		{
+			if (notification_no>5) notification_no=1
+			$("#notification"+notification_no).fadeIn('slow');
+			setTimeout(function(){
+				$("#notification"+notification_no).fadeOut('slow');
+				notification_no ++;
+			},4000)
+		}
+		  $(".custom-close").click(function() {
+	        $(".custom-social-proof").hide();
+	        sessionStorage.show_notifcation=0
+	        clearInterval(t)
+		  });
+	$.ajaxSetup({   async: true,
+                            beforeSend: function(xhr, settings) {
+                            function getCookie(name) {
+                                var cookieValue = null;
+                                if (document.cookie && document.cookie != '') {
+                                    var cookies = document.cookie.split(';');
+                                    for (var i = 0; i < cookies.length; i++) {
+                                        var cookie = jQuery.trim(cookies[i]);
+                                        // Does this cookie string begin with the name we want?
+                                        if (cookie.substring(0, name.length + 1) == (name + '=')) {
+                                            cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                                            break;
+                                        }
+                                    }
+                                }
+                                return cookieValue;
+                            }
+                            if (!(/^http:.*/.test(settings.url) || /^https:.*/.test(settings.url))) {
+                                // Only send the token to relative URLs i.e. locally.
+                                xhr.setRequestHeader("X-CSRFToken", getCookie('csrftoken'));
+                                }
+                            }
+                });
+     
+	});
+	
+	{% if user.is_authenticated and request.GET.login_success %}
+	if (sessionStorage.show_offer!=0 ){
+		setTimeout(function(){
+		
+		$("#common-modal-header").html('Welcome {{request.user.username}}')
+		$("#common-modal-content").html('You are now logged in successfully')
+		$("#common-modal").modal('show');
+		
+		}, 500);
+		sessionStorage.show_offer=0;
+	}
+	{% endif %}
+	function track_add_to_cart(bookid,bookname,category,price)
+	{
+		gtag('event', 'add_to_cart', {
+		  "items": [
+		    {
+		      "id": bookid,
+		      "name": bookname,
+		      "category": category,
+		      "quantity": 1,
+		      "price": price
+		    }
+		  ]
+		});
+	}
+	
+	$.validator.addMethod('email',function(value,element){
+        var re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+			 return re.test(String(value).toLowerCase());
+    });
+	
+	$('#title_pub').autocomplete({
+		source:"/buy-second-hand-old-books/search?title_pub=1",
+		minLength:3
+	});
+
+	$('#author').autocomplete({
+		source:"/buy-second-hand-old-books/search?author=1",
+		minLength:3
+	});
+	
+	$('#email-subscribe').validate({
+	   rules : {
+	   	
+	       email:{required:true,
+	       		email:true
+	       		},
+	       },
+	   errorClass : 'error_red',
+	   highlight : function(element, errorClass) {
+	       errorClass = 'error_red'
+	       $(element).addClass(errorClass);
+	   },
+	   unhighlight : function(element, errorClass) {
+	       errorClass = 'error_red'
+	       $(element).removeClass(errorClass);
+	   },
+	   messages:{
+	       email:{required:"Please enter a valid email",
+	       		email:"Please enter a valid email",
+	       	   },
+	   },
+	   submitHandler: function(form){
+	   	email=$("#email").val()
+	       
+			}
+	});
+
+	/* Use this class in subsquent child pages where click needs to be tracked */
+	$('.click_tracker').click(function() {
+		label=$(this).attr('id')
+	});
+	
+	/*Use his function for tracking anything */
+	function Tracker(label)
+	{
+		
+		
+	}
+	
+</script>
+{% endblock master_scripts%}
+<script>
+{% block page_scripts%}
+{% endblock page_scripts%}
+</script>

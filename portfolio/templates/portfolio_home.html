@@ -1,0 +1,60 @@
+{% extends 'portfolio_base.html' %}
+{% load static from staticfiles %}
+{% block title %}Seller Home | UsedBooksFactory {% endblock title %}
+{% block no_canonical %}{% endblock no_canonical %}
+{% block no_index%}<meta name="robots" content="noindex">{% endblock no_index%}
+{% block meta_description %} Homepage of Seller | UsedBooksFactory{% endblock meta_description %}
+{% block meta_title %}Seller Home | UsedBooksFactory{% endblock meta_title %}
+{% block meta_description_prop %}Homepage for Seller | UsedBooksFactory{% endblock meta_description_prop %}
+{% block meta_url %}{% url 'portfolio_home' %}{% endblock meta_url %}
+{% load portfolio_tags %}
+{% block body %}
+        <div id="page-wrapper" >
+            <div id="page-inner">
+                <div class="row">
+                    <div class="col-lg-12">
+                     <h1>DASHBOARD</h1>   
+                    </div>
+                </div>              
+                 <!-- /. ROW  -->
+                  <hr />
+                	
+                    <div class ="row">
+                    	<br/>
+	                    <div class="col-md-offset-1 col-lg-10 col-md-10">
+	                        <h4><strong class="error_red">TOTAL INVESTED VALUE : {{overall_total}}</strong></h4>
+	                        <div class="table-responsive">
+	                            <table class="table">
+	                                <thead>
+	                                    <tr class="info">
+	                                    	<th>SCRIP NAME</th>
+	                                        <th>HOLDING QUANTITY</th>
+	                                        <th>PURCHASE PRICE</th>
+	                                        <th>TOTAL</th>
+	                                        <th>ALLOCATION %</th>
+	                                    </tr>
+	                                </thead>
+								<tbody>
+	                                {% for stock in existing_stocks %}
+	                                <tr class="warning">
+	                                    <td> {{stock.scrip}}</td>
+	                                    <td> {{stock.quantity}}</td>
+	                                    <td> {{stock.price}}</td>
+	                                    <td> {{stock.total}}</td>
+	                                    <td> {{ stock.total|div:overall_total  }}</td>
+	                                </tr>
+	                                {% endfor %}
+	                            </tbody>
+	                            </table>
+	                        </div>
+	                    </div>
+	                </div>
+		                
+                  <!-- /. ROW  --> 
+    </div>
+             <!-- /. PAGE INNER  -->
+            </div>
+            </div>
+         <!-- /. PAGE WRAPPER  -->
+        </div>
+{% endblock body %}

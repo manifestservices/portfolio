@@ -1,0 +1,23 @@
+{% load portfolio_tags %}
+								<table class="table">
+			                                <thead>
+			                                    <tr class="info">
+			                                    	<th>SCRIP NAME</th>
+			                                        <th>ALLOCATION %</th>
+			                                        <th>AMOUNT TO BE ALLOCATED </th>
+			                                        <th>CURRENT PRICE</th>
+			                                        <th>UNITS TO PURCHASE</th>
+			                                    </tr>
+			                                </thead>
+										<tbody>
+			                                {% for stock in existing_stocks %}
+			                                <tr class="warning">
+			                                    <td> {{stock.scrip}}</td>
+			                                    <td> {{ stock.total|div:overall_total  }}</td>
+			                                    <td id="amount_{{stock.id}}" data-amount="{% widthratio stock.total|div:overall_total 1 new_investment_value %}"> {% widthratio stock.total|div:overall_total 1 new_investment_value %}</td>
+			                                    <td> <input type="text" class="current_price" data-stockid="{{stock.id}}" id="current_price_{{stock.id}}"></td>
+			                                    <td id="purchase_unit_{{stock.id}}"></td>
+			                                </tr>
+			                                {% endfor %}
+			                            </tbody>
+			                    </table>

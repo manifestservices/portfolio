@@ -1,0 +1,100 @@
+{% extends 'seller_base.html' %}
+{% load static from staticfiles %}
+{% block title %}Seller Home | UsedBooksFactory {% endblock title %}
+{% block no_canonical %}{% endblock no_canonical %}
+{% block no_index%}<meta name="robots" content="noindex">{% endblock no_index%}
+{% block meta_description %} Homepage of Seller | UsedBooksFactory{% endblock meta_description %}
+{% block meta_title %}Seller Home | UsedBooksFactory{% endblock meta_title %}
+{% block meta_description_prop %}Homepage for Seller | UsedBooksFactory{% endblock meta_description_prop %}
+{% block meta_url %}{% url 'seller_home' %}{% endblock meta_url %}
+{% block body %}
+		<!-- /. NAV TOP  -->
+        <nav class="navbar-default navbar-side" role="navigation">
+            <div class="sidebar-collapse">
+                <ul class="nav" id="main-menu">
+                    <li class="active-link">
+                        <a href="{% url 'seller_home'%}" ><i class="fa fa-desktop "></i>Dashboard </a>
+                    </li>
+                    <li>
+                        <a href="{% url 'seller_inventory'%}"><i class="fa fa-table "></i>Client List  </a>
+                    </li>
+                    <li>
+                        <a href="{% url 'seller_add_book'%}"><i class="fa fa-edit "></i>Adjust stocks  </a>
+                    </li>
+					
+                </ul>
+	          </div>
+        </nav>
+        <div id="page-wrapper" >
+            <div id="page-inner">
+                <div class="row">
+                    <div class="col-lg-12">
+                     <h1>STAFF DASHBOARD</h1>   
+                    </div>
+                </div>              
+                 <!-- /. ROW  -->
+                  <hr />
+                	<div class="row">
+                    <div class="col-lg-12 col-md-12">
+                        <div class="panel panel-primary">
+                            <div class="panel-heading">
+                               GENERAL WORKS
+                            </div>
+                            <div class="panel-body">
+                                <p>
+                                	<strong>1. Use the menu on the left to complete works <br/>
+                             				2. Update Delivery - Update dispatched shipments to Delivered status <br/>
+                             		  		3. Update Image - Update images which are not existing against book <br/>
+                             		  		4. Update ISBN - Update isbn which are not existing against book <br/>
+                             		  		5. Update customer dropoff- Call customers who have left without payment
+                             		  
+                             		</strong>
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                    </div>
+                    <div class ="row">
+	                    <div class="col-lg-12 col-md-12">
+	                        <div class="table-responsive">
+	                            <table class="table">
+	                                <thead>
+	                                    <tr class="info">
+	                                    	<th>TO DO</th>
+	                                        <th>REPORTED BY</th>
+	                                        <th>ACTION</th>
+	                                    </tr>
+	                                </thead>
+								<tbody>
+									<tr class="warning">
+										<form method="POST" action="{% url 'staff_work' %}?action=create" >
+	                                    <td><textarea id='input_work' type="text" name="to_do" cols="80"></textarea>
+	                                    <td> {{request.user.username}} </td>
+	                                    <td>
+	                                    	
+	                                    	{% csrf_token %}
+	                                    	<button class="file_save" type="submit">SAVE</button>
+	                                    </td>
+	                                    </form>
+	                                </tr>
+	                                {% for work in works %}
+	                                <tr class="info">
+	                                    <td><textarea class='update_work' data-workid={{work.id}} type="text" name="to_do" cols="80" >{{work.to_do}}</textarea>
+	                                    <td> {{work.created_by}} </td>
+	                                    <td class="delete" data-workid={{work.id}}><a href="#">Delete</a></td>
+	                                </tr>
+	                                {% endfor %}
+	                            </tbody>
+	                            </table>
+	                        </div>
+	                    </div>
+	                </div>
+		                
+                  <!-- /. ROW  --> 
+    </div>
+             <!-- /. PAGE INNER  -->
+            </div>
+            </div>
+         <!-- /. PAGE WRAPPER  -->
+        </div>
+{% endblock body %}

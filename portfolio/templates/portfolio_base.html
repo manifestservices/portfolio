@@ -1,0 +1,74 @@
+{% extends 'base.html' %}
+{% load static from staticfiles %}
+{% block style_paths%}
+<!-- Seller static files -->
+<link href="{% static 'seller/css/bootstrap.css' %}" rel="stylesheet" />
+    <!-- FONTAWESOME STYLES-->
+<link href="{% static 'seller/css/font-awesome.css' %}" rel="stylesheet" />
+    <!-- CUSTOM STYLES-->
+<link href="{% static 'seller/css/custom.css' %}" rel="stylesheet" />
+<link href="{% static 'css/popup.css' %}" rel="stylesheet">
+{% endblock style_paths%}
+{% block notification %}
+{% endblock notification %}
+{% block header %}
+<div id="wrapper">
+         <div class="navbar navbar-inverse navbar-fixed-top">
+            <div class="adjust-nav">
+                <div class="navbar-header">
+                    <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".sidebar-collapse">
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </button>
+                    <a class="navbar-brand" href="{% url 'portfolio_home' %}">
+                        <img src="{% static 'img/logo.png' %}" alt="UsedBooksFactory Home" title="UsedBooksFactory Home" width="90">
+                    </a>
+                </div>
+                {% if request.user.is_authenticated %}
+                <span class="logout-spn" >
+                  <a href="{% url 'logout' %}" style="color:#fff;">LOGOUT</a>  
+                </span>
+                {% endif %}
+            </div>
+        </div>
+        <nav class="navbar-default navbar-side" role="navigation">
+            <div class="sidebar-collapse">
+                <ul class="nav" id="main-menu">
+                    <li id="portfolio_home">
+                        <a href="{% url 'portfolio_home'%}" ><i class="fa fa-desktop "></i>Dashboard </a>
+                    </li>
+                    <li id="portfolio_clients">
+                        <a href="{% url 'portfolio_clients'%}"><i class="fa fa-edit "></i>Add Client </a>	
+                    </li>
+                    <li id="portfolio_clients">
+                        <a href="{% url 'portfolio_clients'%}"><i class="fa fa-table "></i>Client portfolio  </a>
+                    </li>
+                    <li id="portfolio_adjust_stocks">
+                        <a href="{% url 'portfolio_adjust_stocks'%}"><i class="fa fa-edit "></i>Adjust stocks  </a>
+                    </li>
+                    <li id="portfolio_ledger">
+                        <a href="{% url 'portfolio_ledger'%}"><i class="fa fa-edit "></i>Ledger </a>
+                    </li>
+                    <li id="portfolio_notes">
+                        <a href="{% url 'portfolio_notes'%}"><i class="fa fa-wechat"></i>Notes  </a>
+                    </li>
+                </ul>
+	          </div>
+        </nav>
+{% endblock header %}
+
+{% block footer %}
+<div class="footer">
+            <div class="row">
+                <div class="col-lg-12" >
+                    &copy;  2020 usedbooksfactory.com | {{OFFICIAL_PHONE}}
+                </div>
+            </div>
+        </div>
+    
+{% endblock footer %}
+{% block sub_scripts_path %}
+<script src="{% static 'seller/js/bootstrap.min.js'%}"></script>
+<script src="{% static 'seller/js/custom.js'%}"></script>
+{% endblock sub_scripts_path %}

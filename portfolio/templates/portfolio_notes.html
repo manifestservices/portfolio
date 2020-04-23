@@ -1,0 +1,111 @@
+{% extends 'portfolio_base.html' %}
+{% load static from staticfiles %}
+{% block title %}Seller Home | UsedBooksFactory {% endblock title %}
+{% block no_canonical %}{% endblock no_canonical %}
+{% block no_index%}<meta name="robots" content="noindex">{% endblock no_index%}
+{% block meta_description %} Homepage of Seller | UsedBooksFactory{% endblock meta_description %}
+{% block meta_title %}Seller Home | UsedBooksFactory{% endblock meta_title %}
+{% block meta_description_prop %}Homepage for Seller | UsedBooksFactory{% endblock meta_description_prop %}
+{% block meta_url %}{% url 'portfolio_home' %}{% endblock meta_url %}
+{% block body %}
+        <div id="page-wrapper" >
+            <div id="page-inner">
+                <div class="row">
+                    <div class="col-lg-12">
+                     <h1>NOTES SECTION</h1>   
+                    </div>
+                </div>              
+                 <!-- /. ROW  -->
+                  <hr />
+                	<div class="row">
+                    <div class="col-lg-12 col-md-12">
+                        <div class="panel panel-primary">
+                            <div class="panel-heading">
+                               GENERAL NOTES
+                            </div>
+                            <div class="panel-body">
+                                <p>
+                                	Use the section below to record notes
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                    </div>
+                    <div class ="row">
+	                    <div class="col-lg-12 col-md-12">
+	                        <div class="table-responsive">
+	                            <table class="table">
+	                                <thead>
+	                                    <tr class="info">
+	                                    	<th>TO DO</th>
+	                                        <th>REPORTED BY</th>
+	                                        <th>ACTION</th>
+	                                    </tr>
+	                                </thead>
+								<tbody>
+									<tr class="warning">
+										<form method="POST" action="{% url 'portfolio_notes' %}?action=create" >
+	                                    <td><textarea id='input_note' type="text" name="to_do" cols="80"></textarea>
+	                                    <td><textarea id='input_user' type="text" name="input_user" cols="80"></textarea>  </td>
+	                                    <td>
+	                                    	
+	                                    	{% csrf_token %}
+	                                    	<button class="file_save" type="submit">SAVE</button>
+	                                    </td>
+	                                    </form>
+	                                </tr>
+	                                {% for note in notes %}
+	                                <tr class="info">
+	                                    <td><textarea class='update_note' data-noteid={{note.id}} type="text" name="to_do" cols="80" >{{note.to_do}}</textarea>
+	                                    <td> {{note.created_by}} </td>
+	                                    <td class="delete" data-noteid={{note.id}}><a href="#">Delete</a></td>
+	                                </tr>
+	                                {% endfor %}
+	                            </tbody>
+	                            </table>
+	                        </div>
+	                    </div>
+	                </div>
+		                
+                  <!-- /. ROW  --> 
+    </div>
+             <!-- /. PAGE INNER  -->
+            </div>
+            </div>
+         <!-- /. PAGE WRAPPER  -->
+        </div>
+{% endblock body %}
+{% block page_scripts%}
+$(document).ready(function(){
+	
+	$('#staff').addClass('active-link')
+	$(".delete").click(function(){
+	var note_id=$(this).data('noteid')
+	result=confirm('Sure to delete ?')
+	if (result){
+		<!-- Removing book from cart  -->
+		var dictionary={}
+		$.post('{% url 'portfolio_notes' %}?action=delete',{note_id:note_id},
+			function(data,status){
+				location.reload();
+			});
+	}	
+	});
+
+	$(".update_note").change(function(){
+	var note_id=$(this).data('noteid')
+	var to_do=$(this).val()
+	alert(to_do)
+	result=confirm('Sure to update TO-DO details ?')
+	if (result){
+		<!-- Removing book from cart  -->
+		var dictionary={}
+		$.post('{% url 'portfolio_notes' %}?action=update',{note_id:note_id,to_do:to_do},
+			function(data,status){
+				location.reload();
+			});
+	}	
+	});
+			
+});
+{% endblock page_scripts%}

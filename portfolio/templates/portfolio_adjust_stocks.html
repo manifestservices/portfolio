@@ -1,0 +1,151 @@
+{% extends 'portfolio_base.html' %}
+{% load static from staticfiles %}
+{% block title %}Seller add book confirmation | UsedBooksFactory {% endblock title %}
+{% block no_canonical %}{% endblock no_canonical %}
+{% block no_index%}<meta name="robots" content="noindex">{% endblock no_index%}
+{% block meta_description %} Confirmation to add book by Seller | UsedBooksFactory{% endblock meta_description %}
+{% block meta_title %}Seller add book confirmation | UsedBooksFactory{% endblock meta_title %}
+{% block meta_description_prop %} Confirmation to add book by Seller | UsedBooksFactory{% endblock meta_description_prop %}
+{% block meta_url %}{% url 'portfolio_adjust_stocks' %}{% endblock meta_url %}
+{% load portfolio_tags %}
+{% block body %}
+		
+        <div id="page-wrapper" >
+            <div id="page-inner">
+            	<h2>Portfolio adjustment</h2>
+				<br/>
+            	<div class="row">
+                    <div class="col-md-offset-1 col-lg-offset-1 col-lg-10 col-md-10">
+                       	<h4><strong class="error_red">TOTAL INVESTED VALUE : {{overall_total}}</strong></h4>
+                        <table class="table">
+	                                <thead>
+	                                    <tr class="info">
+	                                    	<th>SCRIP NAME</th>
+	                                        <th>HOLDING QUANTITY</th>
+	                                        <th>PURCHASE PRICE</th>
+	                                        <th>TOTAL</th>
+	                                        <th>ALLOCATION %</th>
+	                                    </tr>
+	                                </thead>
+								<tbody>
+	                                {% for stock in existing_stocks %}
+	                                <tr class="warning">
+	                                    <td> {{stock.scrip}}</td>
+	                                    <td> {{stock.quantity}}</td>
+	                                    <td> {{stock.price}}</td>
+	                                    <td> {{stock.total}}</td>
+	                                    <td> {{ stock.total|div:overall_total  }}</td>
+	                                </tr>
+	                                {% endfor %}
+	                            </tbody>
+	                            </table>
+                    </div>
+    		 	</div>
+    		 	<div class="row">
+            		<form id='add_stock' method="POST" enctype="multipart/form-data" >
+            		{% csrf_token %}
+            		<div class=" col-md-offset-1 col-lg-offset-1 ">
+	            			<br/>
+	            			<div class="row">
+			                   <div class="col-lg-3 col-md-3">
+			                       <div class="form-group">
+			                       		<label>SCRIP NAME</label>
+			                           <input class="form-control" name="scrip" />
+			                       </div>
+			                   </div>
+			                   <div class="col-lg-3 col-md-3">
+			                       <div class="form-group">
+			                       		<label>QUANTITY</label>
+			                           <input class="form-control" name="quantity" />
+			                       </div>
+			                   </div>
+			                   <div class="col-lg-3 col-md-3">
+			                       <div class="form-group">
+			                       		<label>PURCHASE PRICE PER STOCK</label>
+			                           <input class="form-control" name="price" />
+			                           
+			                       </div>
+			                   </div>
+			                   
+			               </div>
+			               <div class="row">
+			                   <div class="col-lg-6 col-md-6">
+									<button type="submit" class="btn btn-warning">ADD STOCK PURCHASE</button>
+			                   </div>
+			               </div>
+			               
+	    			</div>
+	    			</form>
+	    			</div>
+	    			<br/>
+	    			<h2>
+	    				New Investment Splits
+	    			</h2>
+	    			<br/>
+		            	<div class="row">
+		                    <div class="col-md-offset-1 col-lg-offset-1 col-lg-10 col-md-10">
+		                       	<form id="new_investment" >
+		                       	<h4><strong class="error_red">NEW INVESTMENT VALUE : <input id="new_investment_value" type="text"></strong></h4>
+		                        <div class="row">
+				                   <div class="col-lg-6 col-md-6">
+										<button id="new_investment_submit" type="button" class="btn btn-warning">CALCULATE</button>
+				                   </div>
+				               	</div>
+				               	</form>
+				               <br/>
+		                       <div id="portfolio_new_investment_split_table">
+		                       </div>
+		                    </div>
+		    		 	</div>
+		    		 	
+    			</div>
+    			
+             <!-- /. PAGE INNER  -->
+            </div>
+         <!-- /. PAGE WRAPPER  -->
+        </div>
+{% endblock body %}
+{% block footer %}
+{% endblock footer %}
+{% block page_scripts%}
+$(document).ready(function(){
+	
+	$('#add_stock').validate({
+        rules : {
+            scrip:"required",
+            quantity:"required",
+            price:"required",
+            },
+        errorClass : 'error_red',
+        highlight : function(element, errorClass) {
+            errorClass = 'error_red'
+            $(element).addClass(errorClass);
+        },
+        unhighlight : function(element, errorClass) {
+            errorClass = 'error_red'
+            $(element).removeClass(errorClass);
+        },
+        submitHandler: function(form){
+            form.submit()
+        }
+
+    });
+    
+    $('#new_investment_submit').click(function(){
+    value=$('#new_investment_value').val()
+    $.get("{% url 'new_investment_calculation' %}?value="+value,
+			function(data,status){
+				console.log(data)
+				$('#portfolio_new_investment_split_table').html(data)
+			})
+	});
+    
+    $(document).on('change',".current_price",function(){
+		stockid=$(this).data('stockid')
+		current_price=$(this).val()
+		amount_to_be_allocated=$('#amount_'+stockid).data('amount')
+		units= amount_to_be_allocated/current_price
+		$('#purchase_unit_'+stockid).html(units)
+	});
+});
+{% endblock page_scripts%}
